@@ -4,7 +4,7 @@ class Mafioso {
 	var property nivelLealtad
 	var estaMuerto = false
 	var property estaHerido = false
-	var armasDisponibles
+	var armasDisponibles = []
 	var familiaPerteneciente
 	
 	//PUNTO 1
@@ -31,21 +31,29 @@ class Mafioso {
 		estaMuerto = false
 	}
 	
+	method aumentarLealtad(){
+		nivelLealtad = nivelLealtad * 1.1
+	}
+	
 	//TRAICIONES
 	method iniciarTraicion(familiaNueva){
-		const victimas = []
-		const unaVictima = familiaPerteneciente.anyOne()
-		victimas.add(unaVictima)
-		const hoy = new Date()
-		const fechaTentativa = hoy + 7
-		
-		familiaPerteneciente.verificarTraicion(self, victimas, familiaNueva) 
+		if (!estaMuerto) {
+			const victimas = []
+			const unaVictima = familiaPerteneciente.anyOne()
+			victimas.add(unaVictima)
+			const hoy = new Date()
+			const fechaTentativa = hoy + 7
+			
+			familiaPerteneciente.verificarTraicion(self, victimas, familiaNueva)
+		}
+		 
 	}
 	
 	method efectuarTraicion(unasVictimas, familiaNueva){
 		unasVictimas.forEach( {victima => self.atacarA(victima)} )
 		familiaPerteneciente.eliminarMiembro(self)
 		familiaNueva.sumarMiembro()
+		familiaPerteneciente = familiaNueva
 	}
 	
 	method atacarA(unMafioso){
@@ -55,6 +63,8 @@ class Mafioso {
 
 class Don inherits Mafioso {
 	var subordinados
+	var property esSubjefe = false
+	var property esSoldado = false
 	
 	override method sabeDespacharElegantemente(){
 		return true
@@ -66,18 +76,29 @@ class Don inherits Mafioso {
 }
 
 class Subjefe inherits Mafioso {
-	
+	var property esSubjefe = true
+	var property esSoldado = false
+	var subordinados
 	
 	override method atacarA(unMafioso){
-		const armaAUsar = armasDisponibles.anyOne()
-		armaAUsar.usarlaContra(unMafioso)
+		armasDisponibles.anyOne().usarlaContra(unMafioso)
+	}
+	
+	method subirADon(){
+		const nuevoDon = new Don(subordinados = subordinados, nivelLealtad = 100, familiaPerteneciente = familiaPerteneciente)
+		familiaPerteneciente.asignarNuevoDon(nuevoDon)
 	}
 }
 
 class Soldado inherits Mafioso {
+	var property esSubjefe = false
+	var property esSoldado = true
 	
 	override method atacarA(unMafioso){
-		const armaAUsar = armasDisponibles.head()
-		armaAUsar.usarlaContra(unMafioso)
+		armasDisponibles.head().usarlaContra(unMafioso)
+	}
+	
+	method subirDeRango(){
+		return new Subjefe(subordinados = [], nivelLealtad = 100, familiaPerteneciente = familiaPerteneciente) //REVISAR!
 	}
 }
