@@ -5,10 +5,9 @@ class Pistola {
 		return cantidadDeBalas == 1
 	}
 	
-	method usarlaContra(unMafioso, otraFamilia){
+	method usarlaContra(unMafioso){
 		cantidadDeBalas--
 		unMafioso.muere()
-		otraFamilia.eliminarMiembro(unMafioso)
 	}
 }
 
@@ -17,7 +16,7 @@ object escopeta{
 		return false
 	}
 	
-	method usarlaContra(unMafioso, otraFamilia){
+	method usarlaContra(unMafioso){
 		if(!unMafioso.estaHerido())
 		{
 			unMafioso.quedaHerido()
@@ -25,7 +24,6 @@ object escopeta{
 		else
 		{
 			unMafioso.muere()
-			otraFamilia.eliminarMiembro(unMafioso)
 		}
 	}
 }
@@ -38,10 +36,9 @@ class CuerdaDePiano {
 		return true
 	}
 	
-	method usarlaContra(unMafioso, otraFamilia){
+	method usarlaContra(unMafioso){
 		if(buenaCalidad){
 			unMafioso.muere()
-			otraFamilia.eliminarMiembro(unMafioso)
 		}
 	}
 }

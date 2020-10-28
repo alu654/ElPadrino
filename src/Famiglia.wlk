@@ -1,7 +1,9 @@
 import Armas.*
+import Mafioso.*
 
 class Famiglia{
 	var integrantes
+	var integrantesQueTraicionaron
 	
 	//PUNTO 2
 	method elMasPeligroso(){
@@ -28,10 +30,16 @@ class Famiglia{
 	//PUNTO 5
 	method ataqueSorpresaA(otraFamilia){
 		const enemigoMasPeligroso = otraFamilia.elMasPeligroso()
-		integrantes.forEach( {mafioso => mafioso.atacarA(enemigoMasPeligroso, otraFamilia)} )
-		
+		integrantes.forEach( {mafioso => mafioso.atacarA(enemigoMasPeligroso)} )
+		otraFamilia.verificarVida(enemigoMasPeligroso)
 		if(otraFamilia.yaNoQuedanVivos()){
 			throw new Exception(message = "La quedaron todos")
+		}
+	}
+	
+	method verificarVida(unMafioso){
+		if(unMafioso.estaMuerto()){
+			self.eliminarMiembro(unMafioso)
 		}
 	}
 	
@@ -41,5 +49,30 @@ class Famiglia{
 	
 	method yaNoQuedanVivos(){
 		return integrantes.size() == 0
+	}
+	
+	method verificarTraicion(unTraidor, unasVictimas, familiaNueva){
+		if(self.lealtadPromedio() > unTraidor.nivelLealtad() * 2)
+		{
+			unTraidor.muere()
+			integrantesQueTraicionaron.add(unTraidor)
+			integrantes.remove(unTraidor)
+		}
+		else
+		{
+			unTraidor.efectuarTraicion(unasVictimas, familiaNueva)
+		}
+	}
+	
+	method lealtadPromedio(){
+		return self.sumatoriaLealtad() / integrantes.size()
+	}
+	
+	method sumatoriaLealtad(){
+		return integrantes.sum( {mafioso => mafioso.nivelLealtad()} )
+	}
+	
+	method sumarMiembro(){
+		integrantes.add(new Soldado(nivelLealtad = 100, estaMuerto = false, estaHerido = false, armasDisponibles = [], familiaPerteneciente = self))
 	}
 }
