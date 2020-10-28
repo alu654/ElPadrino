@@ -6,8 +6,14 @@ class Pistola {
 	}
 	
 	method usarlaContra(unMafioso){
-		cantidadDeBalas--
-		unMafioso.muere()
+		if(cantidadDeBalas <= 0){
+			throw new Exception(message = "Tenes que recargar")
+		}
+		else
+		{
+			cantidadDeBalas--
+			unMafioso.muere()
+		}		
 	}
 }
 
@@ -17,7 +23,7 @@ object escopeta{
 	}
 	
 	method usarlaContra(unMafioso){
-		if(!unMafioso.estaHerido())
+		if(unMafioso.estaHerido())
 		{
 			unMafioso.quedaHerido()
 		}

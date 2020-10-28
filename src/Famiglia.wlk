@@ -88,13 +88,19 @@ class Famiglia{
 		if(self.lealtadPromedio() > unTraidor.nivelLealtad() * 2)
 		{
 			unTraidor.muere()
-			integrantesQueTraicionaron.add(unTraidor)
 			integrantes.remove(unTraidor)
 		}
 		else
 		{
 			unTraidor.efectuarTraicion(unasVictimas, familiaNueva)
+			
 		}
+		
+		integrantesQueTraicionaron.add(unTraidor)
+	}
+	
+	method cualquieIntegrante(){
+		return integrantes.anyOne()
 	}
 	
 	method lealtadPromedio(){
@@ -106,6 +112,6 @@ class Famiglia{
 	}
 	
 	method sumarMiembro(){
-		integrantes.add(new Soldado(nivelLealtad = 100, estaMuerto = false, estaHerido = false, armasDisponibles = [], familiaPerteneciente = self))
+		integrantes.add(new Soldado(nivelLealtad = 100, armasDisponibles = [], familiaPerteneciente = self))
 	}
 }

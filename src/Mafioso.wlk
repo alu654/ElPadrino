@@ -36,10 +36,10 @@ class Mafioso {
 	}
 	
 	//TRAICIONES
-	method iniciarTraicion(familiaNueva){
+	method iniciarTraicionParaPasarseA(familiaNueva){
 		if (!estaMuerto) {
 			const victimas = []
-			const unaVictima = familiaPerteneciente.anyOne()
+			const unaVictima = familiaPerteneciente.cualquierIntegrante()
 			victimas.add(unaVictima)
 			const hoy = new Date()
 			const fechaTentativa = hoy + 7
