@@ -43,10 +43,20 @@ class Mafioso {
 			victimas.add(unaVictima)
 			const hoy = new Date()
 			const fechaTentativa = hoy + 7
-			
-			familiaPerteneciente.verificarTraicion(self, victimas, familiaNueva)
+			self.ocurrioIncumbencia(victimas, fechaTentativa, familiaNueva)
 		}
-		 
+	}
+	
+	method ocurrioIncumbencia(unasVictimas, unaFecha, familiaNueva){
+		const numeros = [1,2,3,4,5]
+		const numeroDeIncumbencia = numeros.anyOne()
+		
+		if(numeroDeIncumbencia == 3){ //ES UN CASO RANDOM PARA VER SI OCURRIO UNA INCUMBENCIA DURANTE LA PLANIFICACION DE LA TRAICION
+			const otraVictima = familiaPerteneciente.cualquierIntegrante()
+			unasVictimas.add(otraVictima)
+		}
+		
+		familiaPerteneciente.verificarTraicion(self, unasVictimas, familiaNueva)
 	}
 	
 	method efectuarTraicion(unasVictimas, familiaNueva){
@@ -82,6 +92,7 @@ class Subjefe inherits Mafioso {
 	
 	override method atacarA(unMafioso){
 		armasDisponibles.anyOne().usarlaContra(unMafioso)
+		//FIXME: FALTA VERIFICAR QUE NO SE REPITA EL ARMA
 	}
 	
 	method subirADon(){
