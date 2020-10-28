@@ -9,5 +9,7 @@ class Mafioso {
 		return nivelVida == 0
 	}
 	
-	
+	method agregarArma(unArma){
+		armasDisponibles.add(unArma)	
+	}	
 }

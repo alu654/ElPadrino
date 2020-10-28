@@ -1,3 +1,5 @@
+import Armas.*
+
 class Famiglia{
 	var integrantes
 	
@@ -12,5 +14,10 @@ class Famiglia{
 	
 	method armasDeLosVivos(){
 		return self.integrantesVivos().map( {mafioso => mafioso.armasDisponibles()} )
+	}
+	
+	//PUNTO 3
+	method distribuirArmas(){
+		integrantes.forEach( {mafioso => mafioso.agregarArma(new Pistola(cantidadDeBalas = 6))} )
 	}
 }
