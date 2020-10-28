@@ -27,10 +27,19 @@ class Famiglia{
 	
 	//PUNTO 5
 	method ataqueSorpresaA(otraFamilia){
-		/*const enemigoMasPeligroso = otraFamilia.elMasPeligroso()
-		integrantes.forEach( {mafioso => mafioso.atacarA(enemigoMasPeligroso)} )
+		const enemigoMasPeligroso = otraFamilia.elMasPeligroso()
+		integrantes.forEach( {mafioso => mafioso.atacarA(enemigoMasPeligroso, otraFamilia)} )
+		
 		if(otraFamilia.yaNoQuedanVivos()){
 			throw new Exception(message = "La quedaron todos")
-		}*/
+		}
+	}
+	
+	method eliminarMiembro(unMafioso){
+		integrantes.remove(unMafioso)
+	}
+	
+	method yaNoQuedanVivos(){
+		return integrantes.size() == 0
 	}
 }
