@@ -12,4 +12,9 @@ class Mafioso {
 	method agregarArma(unArma){
 		armasDisponibles.add(unArma)	
 	}	
+	
+	//PUNTO 4
+	method sabeDespacharElegantemente(){
+		return rango.sabeDespacharElegantemente()
+	}
 }
