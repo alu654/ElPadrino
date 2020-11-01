@@ -1,8 +1,10 @@
 import Arma.*
+import Mafioso.*
 
 class Familia {
 	 var integrantes = []
 	 var don
+	 var traidores
 	 
 	 //PUNTO 2
 	 method elMasPeligroso(){
@@ -52,5 +54,29 @@ class Familia {
 	 
 	 method soldadosVivos(){
 	 	return integrantes.filter( {mafioso => mafioso.esSoldado().estaVivo()} )
+	 }
+	 
+	 method cualquierMiembro() = return integrantes.anyOne()
+	 
+	 method lealtadPromedio(){
+	 	return integrantes.sum( {mafioso => mafioso.nivelLealtad()} ) / integrantes.size()
+	 }
+	 
+	 method agregarMafioso(unMafioso){
+	 	const maximaLealtad = integrantes.max( {mafioso => mafioso.nivelLealtad()} )
+	 	integrantes.add(new Soldado(nivelLealtad = maximaLealtad, familiaPerteneciente = self))
+	 }
+	 
+	 method eliminarMiembro(unMafioso){
+	 	integrantes.remove(unMafioso)
+	 } 
+	 
+	 method ajusticiar(unMafioso){
+	 	unMafioso.morir()
+	 	self.eliminarMiembro(unMafioso)
+	 }
+	 
+	 method agregarTraidor(unMafioso){
+	 	traidores.add(unMafioso)
 	 }
 }

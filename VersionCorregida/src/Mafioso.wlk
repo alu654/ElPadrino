@@ -10,6 +10,8 @@ class Mafioso{
 	var rango
 	var property nivelLealtad
 	
+	var familiaActual
+	
 	//PUNTO 1
 	method duermeConLosPeces(){
 		return estaMuerto
@@ -87,5 +89,45 @@ class Mafioso{
 	
 	method tieneMasDeCincoArmas(){
 		return self.cantidadDeArmas() > 5
+	}
+	
+	//PARTE TRAICIONES
+	method traicionarParaPasarseA(otraFamilia){
+		const victimas = []
+		const victimaTraicion = familiaActual.cualquierMiembro()
+		victimas.add(victimaTraicion)
+		
+		if(self.seComplicoTraicion()){
+			const otraVictima = familiaActual.filter( {integrante => integrante != victimaTraicion} ).anyOne()
+			//YA SE QUE ROMPO ENCAPSULAMIENTO
+			victimas.add(otraVictima)
+		}
+		
+		self.ejecutarTraicion(victimas, otraFamilia)
+	}
+	
+	method seComplicoTraicion(){
+		const lista = [1..1000]
+		const numero = lista.anyOne()
+		return numero.even()
+	}
+	
+	method ejecutarTraicion(unasVictimas, otraFamilia){
+		if(self.puedeEjecutarTraicion()){
+			unasVictimas.forEach( {victima => self.atacarA(victima)} )
+			otraFamilia.agregarMafioso(self)
+			familiaActual.eliminarMiembro(self)
+			familiaActual = otraFamilia			
+		}
+		else
+		{
+			familiaActual.ajusticiar(self)
+		}
+		
+		familiaActual.agregarTraidor(self)
+	}
+	
+	method puedeEjecutarTraicion(){
+		return nivelLealtad * 2 > familiaActual.lealtadPromedio()
 	}
 }
