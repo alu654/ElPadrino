@@ -1,4 +1,4 @@
-class Pistola {
+class Revolver{
 	var cantidadDeBalas
 	
 	method esSutil(){
